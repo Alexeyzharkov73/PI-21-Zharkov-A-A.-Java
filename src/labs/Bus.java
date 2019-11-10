@@ -5,71 +5,33 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.Random;
 
-public class Bus{
-	private Color colorBody;
+public class Bus extends BaseBus{
+	
 	private Color dopColor;
-	private int posX;
-	private int posY;
-	private int maxSpeed;
 	private boolean isDorsDraw;
-	private int busWidth = 100;
-	private int busHeight = 60;
 	private Doors doorsCount;
-	private int pictureWidth;
-	private int pictureHeight;
-	private int weight;
+	private int doorsForm;
 	
 	
 	public Bus(int maxSpeed, int weight, Color color, Color dopColor, boolean isDoorsDraw, Doors doorsCount) {
-		this.weight = weight;
-		this.colorBody = color;
-		this.maxSpeed = maxSpeed;
+		super(maxSpeed, weight, color);
 		this.dopColor = dopColor;
 		this.isDorsDraw = isDoorsDraw;
 		this.doorsCount = doorsCount;
-	}
-	
-	public void setPosition(int x, int y, int width, int height) {
-		posX = x;
-		posY = y;
-		busWidth = width;
-		busHeight = height;
-	}
-
-	public void moveBus(Direction  direction) {
-		int step = maxSpeed * 100 / weight;
-		switch (direction)
-		{
-		case RIGHT:
-			if (posX + step < pictureWidth + busWidth) {
-				posX += step;
-			}
-			break;
-		case LEFT:
-			if (posX - step >= 0) {
-				posX -= step;
-			}
-			break;
-		case UP:
-			if (posY - step >= 0) {
-				posY -= step;
-			}
-			break;
-		case DOWN:
-			if (posY + step < pictureHeight + busHeight) {
-				posY += step;
-			}
-			break;
-		}
+		this.doorsForm = new Random().nextInt(3);
 	}
 	
 	public void drawBus(Graphics g) {
-		g.setColor(Color.RED);
+		g.setColor(this.colorBody);
 		g.fillRect(posX, posY, 75, 15);
-		g.fillRect(posX, posY + 15, 90, 20);
-		
-		g.setColor(Color.BLACK);
+		g.fillRect(posX + 60, posY + 17, 10, 10);
+		g.setColor(Color.black);
 		g.drawRect(posX, posY, 75, 15);
+		
+		g.setColor(this.dopColor);
+		
+		g.fillRect(posX, posY + 15, 90, 20);
+		g.setColor(Color.black);
 		g.drawRect(posX, posY + 15, 90, 20);
 		
 		g.setColor(Color.darkGray);
@@ -77,7 +39,17 @@ public class Bus{
 		g.fillOval(posX + 70, posY + 30, 25, 20);
 		
 		if(this.isDorsDraw) {
-			new DoorsDraw(this.doorsCount).draw(g, posX, posY);
+			switch(doorsForm){
+			case 0:
+				new DoorsDraw().drawRectDoors(doorsCount, g, posX, posY);
+				break;
+			case 1:
+				new DoorsDraw().drawElipseDoors(doorsCount, g, posX, posY);
+				break;
+			default:
+				new DoorsDraw().drawTriangleDoors(doorsCount, g, posX, posY);
+				break;
+			}
 		}
 		
 		g.setColor(Color.BLUE);
@@ -89,48 +61,5 @@ public class Bus{
 		
 		
 	}
-
-	public Color getColorBody() {
-		return colorBody;
-	}
-
-	public void setColorBody(Color colorBody) {
-		this.colorBody = colorBody;
-	}
-
-	public Color getDopColor() {
-		return dopColor;
-	}
-
-	public void setDopColor(Color dopColor) {
-		this.dopColor = dopColor;
-	}
-
-	public int getMaxSpeed() {
-		return maxSpeed;
-	}
-
-	public void setMaxSpeed(int maxSpeed) {
-		this.maxSpeed = maxSpeed;
-	}
-
-	public boolean isDorsDraw() {
-		return isDorsDraw;
-	}
-
-	public void setDorsDraw(boolean isDorsDraw) {
-		this.isDorsDraw = isDorsDraw;
-	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-	
-	
-
 
 }
