@@ -95,32 +95,44 @@ public class Labs {
 		JButton btnNewButton = new JButton("Create Bus");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Bus tmp = new Bus(150, 1500, Color.RED, Color.BLACK, true, false, Doors.FIVE);
-				tmp.setPosition(0, 0, 820, 330);
+				Bus tmp = new Bus(150, 1500, Color.RED, Color.yellow, true, Doors.FIVE);
+				tmp.setPosition(0, 0, 902, 400);
 				panel.setBus(tmp);
 				panel.repaint();
 			}
 		});
 		btnNewButton.setBounds(15, 493, 115, 29);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnCreateBasebus = new JButton("Create BaseBus");
+		btnCreateBasebus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ITransport tmp = new BaseBus(150, 1500, Color.red);
+				tmp.setPosition(0, 0, 810, 340);
+				panel.setBus(tmp);
+				panel.repaint();
+			}
+		});
+		btnCreateBasebus.setBounds(135, 493, 139, 29);
+		frame.getContentPane().add(btnCreateBasebus);
 	}
 	
 	private void move(String direction) {
 		switch(direction) {
 		case("W"):
-			panel.getBus().moveBus(Direction.UP);
+			panel.getBus().moveTransport(Direction.UP);
 			panel.repaint();
 			break;
 		case("S"):
-			panel.getBus().moveBus(Direction.DOWN);
+			panel.getBus().moveTransport(Direction.DOWN);
 			panel.repaint();
 			break;
 		case("A"):
-			panel.getBus().moveBus(Direction.LEFT);
+			panel.getBus().moveTransport(Direction.LEFT);
 			panel.repaint();
 			break;
 		case("D"):
-			panel.getBus().moveBus(Direction.RIGHT);
+			panel.getBus().moveTransport(Direction.RIGHT);
 			panel.repaint();
 			break;
 		}

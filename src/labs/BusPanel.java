@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class BusPanel extends JPanel {
-	private Bus bus;
+	private ITransport bus;
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -15,10 +15,10 @@ public class BusPanel extends JPanel {
 		}
 	}
 	
-	public void setBus(Bus ship) {
-		this.bus = ship;
+	public void setBus(ITransport bus) {
+		this.bus = bus;
 	}
-	public Bus getBus() {
+	public ITransport getBus() {
 		return bus;
 	}
 }
