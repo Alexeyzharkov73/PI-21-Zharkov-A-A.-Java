@@ -24,7 +24,7 @@ public abstract class Vehicle implements ITransport {
 
 	public abstract void moveTransport(Direction direction);
 
-	public abstract void drawBus(Graphics g);
+	public abstract void drawBus(Graphics g, IDoors draw);
 
 	public int getWeight() {
 		return weight;

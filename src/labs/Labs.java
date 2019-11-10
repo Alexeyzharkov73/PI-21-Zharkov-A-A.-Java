@@ -7,18 +7,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 
 import java.awt.event.ActionListener;
-import java.util.Random;
 import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
+import javax.swing.JFormattedTextField;
+import javax.swing.JList;
+
 
 public class Labs {
 
 	private JFrame frame;
 	private BusPanel panel;
+	private JFormattedTextField formattedTextField;
+	private JList list;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -47,94 +52,73 @@ public class Labs {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 949, 594);
+		frame.setBounds(100, 100, 1081, 530);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		panel = new BusPanel();
+		panel.setParking(new Parking<BaseBus, DoorsDraw>(20, 1081, 621));
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(21, 24, 902, 400);
+		panel.setBounds(21, 24, 845, 447);
 		frame.getContentPane().add(panel);
 		
-		JButton btnW = new JButton("W");
-		btnW.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				move(btnW.getText());
-			}
-		});
-		btnW.setBounds(803, 440, 47, 29);
-		frame.getContentPane().add(btnW);
-		
-		JButton btnA = new JButton("A");
-		btnA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				move(btnA.getText());
-			}
-		});
-		btnA.setBounds(741, 493, 47, 29);
-		frame.getContentPane().add(btnA);
-		
-		JButton btnS = new JButton("S");
-		btnS.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				move(btnS.getText());
-			}
-		});
-		btnS.setBounds(803, 493, 47, 29);
-		frame.getContentPane().add(btnS);
-		
-		JButton btnD = new JButton("D");
-		btnD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				move(btnD.getText());
-			}
-		});
-		btnD.setBounds(865, 493, 47, 29);
-		frame.getContentPane().add(btnD);
-		
-		JButton btnNewButton = new JButton("Create Bus");
+		JButton btnNewButton = new JButton("BaseBus");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Bus tmp = new Bus(150, 1500, Color.RED, Color.yellow, true, Doors.FIVE);
-				tmp.setPosition(0, 0, 902, 400);
-				panel.setBus(tmp);
-				panel.repaint();
+				Color tmp = JColorChooser.showDialog(frame, "Выберите цвет", null);
+				if (tmp != null) {
+					ITransport s = new BaseBus(50,5,tmp);
+					panel.setBus(s);
+					panel.repaint();
+				}
 			}
 		});
-		btnNewButton.setBounds(15, 493, 115, 29);
+		btnNewButton.setBounds(907, 24, 124, 23);
 		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnCreateBasebus = new JButton("Create BaseBus");
-		btnCreateBasebus.addActionListener(new ActionListener() {
+		JButton btnNewButton_1 = new JButton("Bus");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ITransport tmp = new BaseBus(150, 1500, Color.red);
-				tmp.setPosition(0, 0, 810, 340);
-				panel.setBus(tmp);
+				Color tmp = JColorChooser.showDialog(frame, "Выберите цвет", null);
+				if (tmp != null) {
+					Color tmp1 = JColorChooser.showDialog(frame, "Выберите цвет", null);
+					if(tmp1 != null) {
+						panel.setBus(new Bus(50,5,tmp,tmp1, true, Doors.FIVE));
+						panel.repaint();
+					}
+				}
+			}
+		});
+		btnNewButton_1.setBounds(907, 63, 124, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		SmallBusPanel panel_1 = new SmallBusPanel();
+		panel_1.setBorder(new TitledBorder(null, "\u041A\u043E\u0440\u0430\u0431\u043B\u044C", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(895, 250, 140, 221);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 93, 120, 117);
+		panel_1.add(panel_2);
+		
+		JButton btnNewButton_2 = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panel_1.setShip(panel.getBus(Integer.parseInt(formattedTextField.getText())-1));
+				panel_1.repaint();
 				panel.repaint();
 			}
 		});
-		btnCreateBasebus.setBounds(135, 493, 139, 29);
-		frame.getContentPane().add(btnCreateBasebus);
-	}
-	
-	private void move(String direction) {
-		switch(direction) {
-		case("W"):
-			panel.getBus().moveTransport(Direction.UP);
-			panel.repaint();
-			break;
-		case("S"):
-			panel.getBus().moveTransport(Direction.DOWN);
-			panel.repaint();
-			break;
-		case("A"):
-			panel.getBus().moveTransport(Direction.LEFT);
-			panel.repaint();
-			break;
-		case("D"):
-			panel.getBus().moveTransport(Direction.RIGHT);
-			panel.repaint();
-			break;
-		}
+		btnNewButton_2.setBounds(10, 60, 120, 23);
+		panel_1.add(btnNewButton_2);
+		
+		JLabel label = new JLabel("\u041C\u0435\u0441\u0442\u043E:");
+		label.setBounds(10, 35, 56, 14);
+		panel_1.add(label);
+		
+		formattedTextField = new JFormattedTextField();
+		formattedTextField.setBounds(84, 29, 46, 20);
+		panel_1.add(formattedTextField);
 	}
 }
