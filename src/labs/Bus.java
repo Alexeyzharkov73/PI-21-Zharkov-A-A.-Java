@@ -21,7 +21,7 @@ public class Bus extends BaseBus{
 		this.setDoorsForm(new Random().nextInt(3));
 	}
 	
-	public void drawBus(Graphics g) {
+	public void drawBus(Graphics g, IDoors draw) {
 		g.setColor(this.colorBody);
 		g.fillRect(posX, posY, 75, 15);
 		g.fillRect(posX + 60, posY + 17, 10, 10);
@@ -41,13 +41,13 @@ public class Bus extends BaseBus{
 		if(this.isDorsDraw) {
 			switch(doorsForm){
 			case 0:
-				new DoorsDraw().drawRectDoors(doorsCount, g, posX, posY);
+				draw.drawRectDoors(doorsCount, g, posX, posY);
 				break;
 			case 1:
-				new DoorsDraw().drawElipseDoors(doorsCount, g, posX, posY);
+				draw.drawElipseDoors(doorsCount, g, posX, posY);
 				break;
 			default:
-				new DoorsDraw().drawTriangleDoors(doorsCount, g, posX, posY);
+				draw.drawTriangleDoors(doorsCount, g, posX, posY);
 				break;
 			}
 		}
@@ -71,7 +71,5 @@ public class Bus extends BaseBus{
 			this.doorsForm = doorsForm;
 		}
 	}
-	
-	
 
 }

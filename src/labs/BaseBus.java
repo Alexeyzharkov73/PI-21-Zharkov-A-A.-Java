@@ -44,7 +44,7 @@ public class BaseBus extends Vehicle {
 	}
 
 	@Override
-	public void drawBus(Graphics g) {
+	public void drawBus(Graphics g, IDoors draw) {
 		g.setColor(this.colorBody);
 		g.fillRect(posX, posY + 15, 90, 30);
 		g.setColor(Color.black);
@@ -63,10 +63,16 @@ public class BaseBus extends Vehicle {
 		g.fillRect(posX + 60, posY + 17, 10, 10);
 		g.fillRect(posX + 80, posY + 17, 10, 10);
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(posX + 31, posY + 35, 8, 11);
-		g.fillRect(posX + 51, posY + 35, 8, 11);
+		draw.drawRectDoors(Doors.THREE, g, posX, posY);
 		
+	}
+	
+	public static boolean moreOrEquals(BaseBus first, BaseBus second) {
+		return first.getMaxSpeed() >= second.getMaxSpeed();
+	}
+	
+	public static boolean lessOrEquals(BaseBus first, BaseBus second) {
+		return first.getMaxSpeed() <= second.getMaxSpeed();
 	}
 	
 }
