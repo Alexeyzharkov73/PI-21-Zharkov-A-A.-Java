@@ -23,7 +23,10 @@ public class Parking<T extends ITransport, D extends DoorsDraw> implements Seria
 				
 	}
 	
-	public int putBusInParking(T bus) {
+	public int putBusInParking(T bus) throws ParkingOverflowException{
+		if(parking.size() == countPlaces) {
+			throw new ParkingOverflowException(); 
+		}
 		for(int i =0 ;i < this.countPlaces; i++) {
 			if(!this.parking.containsKey(i)) {
 				this.parking.put(i, bus);
@@ -34,13 +37,29 @@ public class Parking<T extends ITransport, D extends DoorsDraw> implements Seria
 		return -1;
 	}
 	
-	public T getBusInParking(int ticket) {
+	public T getBusInParking(int ticket) throws ParkingNotFoundException{
 		if(!this.parking.containsKey(ticket)) {
-			return null;
+			throw new ParkingNotFoundException(ticket);
 		}
 		T tmp = parking.get(ticket);
 		parking.remove(ticket);
 		return tmp;
+	}
+	
+	public void putBus(T bus) throws ParkingOverflowException{
+		for(int i = 0; i<this.countPlaces; i++) {
+			if(!this.parking.containsKey(i)) {
+				parking.put(i, bus);
+			}
+		}
+		throw new ParkingOverflowException();
+	}
+	
+	public void setBus(int index, T bus) {
+		if(this.parking.containsKey(index)) {
+			throw new ParkingOccupiedPlaceException(index);
+		}
+		this.parking.put(index, bus);
 	}
 	
 	public void draw(Graphics g, D draw) {

@@ -29,3 +29,7 @@
 /DraggableLabel.class
 /Labs$2$1.class
 /Labs$8.class
+/LogError.class
+/ParkingNotFoundException.class
+/ParkingOccupiedPlaceException.class
+/ParkingOverflowException.class

@@ -12,6 +12,11 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -21,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 
 public class Labs {
@@ -29,7 +35,8 @@ public class Labs {
 	private BusPanel panel;
 	private JFormattedTextField formattedTextField;
 	private JList list;
-	
+	private Logger logger;
+
 	/**
 	 * Launch the application.
 	 */
@@ -40,7 +47,11 @@ public class Labs {
 					Labs window = new Labs();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					LogError.log(e.getMessage());
+					JOptionPane.showMessageDialog(null,
+						    e.getMessage(),
+						    e.getMessage(),
+						    JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -48,15 +59,26 @@ public class Labs {
 
 	/**
 	 * Create the application.
+	 * @throws IOException 
+	 * @throws SecurityException 
 	 */
-	public Labs() {
+	public Labs() throws SecurityException, IOException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
+	 * @throws SecurityException 
 	 */
-	private void initialize() {
+	private void initialize() throws SecurityException, IOException {
+		new LogError("G:/errors.txt");
+		logger = Logger.getGlobal();
+        SimpleFormatter formatter = new SimpleFormatter(); 
+		Handler h = new FileHandler("G:/log.txt");
+		h.setFormatter(formatter);
+		logger.addHandler(h);
+		logger.setUseParentHandlers(false);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1081, 530);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +93,22 @@ public class Labs {
 		JButton btnNewButton_1 = new JButton("create bus");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Начато создание автобуса");
 				AdditionalForm aForm = new AdditionalForm(new BusCallBack() {
 
 					@Override
 					public void takeBus(ITransport bus) {
-						panel.setBus(bus);
-						panel.repaint();
+						try {
+							panel.setBus(bus);
+							panel.repaint();
+						} catch (Exception ex) {
+							LogError.log(ex.getMessage());
+							logger.info(ex.getMessage());
+							JOptionPane.showMessageDialog(null,
+								    ex.getMessage(),
+								    ex.getMessage(),
+								    JOptionPane.ERROR_MESSAGE);
+						}
 						
 					}
 					
@@ -99,9 +131,17 @@ public class Labs {
 		JButton btnNewButton_2 = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_1.addBus(panel.getBus(Integer.parseInt(formattedTextField.getText())-1));
-				panel_1.repaint();
-				panel.repaint();
+				try {
+					panel_1.addBus(panel.getBus(Integer.parseInt(formattedTextField.getText())-1));
+					panel_1.repaint();
+					panel.repaint();
+				} catch (Exception ex) {
+					LogError.log(ex.getMessage());
+					JOptionPane.showMessageDialog(null,
+						    ex.getMessage(),
+						    ex.getMessage(),
+						    JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_2.setBounds(10, 60, 120, 23);
@@ -127,6 +167,7 @@ public class Labs {
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
+				logger.info("Изменен уровень парковки. Текущий уровень: " + list.getSelectedIndex());
 				BusPanel.currentLevel = list.getSelectedIndex();
 				panel.repaint();
 				
@@ -149,8 +190,12 @@ public class Labs {
 				    try {  
 				        panel.saveParking(fc.getSelectedFile().getPath()); 
 				    }  
-				    catch (Exception e) {
-				    	System.out.println("save parking error");
+				    catch (Exception ex) {
+						LogError.log(ex.getMessage());
+						JOptionPane.showMessageDialog(null,
+							    ex.getMessage(),
+							    ex.getMessage(),
+							    JOptionPane.ERROR_MESSAGE);
 				    }  
 				} 
 			}
@@ -164,8 +209,12 @@ public class Labs {
 				    try {  
 				        panel.saveCurrentParking(fc.getSelectedFile().getPath()); 
 				    }  
-				    catch (Exception e) {
-				    	System.out.println("save parking error");
+				    catch (Exception ex) {
+						LogError.log(ex.getMessage());
+						JOptionPane.showMessageDialog(null,
+							    ex.getMessage(),
+							    ex.getMessage(),
+							    JOptionPane.ERROR_MESSAGE);
 				    }  
 				} 
 			}

@@ -15,13 +15,16 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import java.util.logging.Logger;
 
 public class CreateBusPanel extends JPanel implements DropTargetListener {
 
 	private ITransport bus;
-
+	private Logger logger;
+	
 	public CreateBusPanel() {
 		super();
+		logger = Logger.getGlobal();
 		new DropTarget(this, this);
 		this.setLayout(null);
 		DraggableLabel lblNewLabel = new DraggableLabel(
@@ -29,6 +32,7 @@ public class CreateBusPanel extends JPanel implements DropTargetListener {
 					@Override
 					public void setColor(Color c) {
 						if (bus != null) {
+							logger.info("Основной цвет автобуса изменен");
 							bus.setBodyColor(c);
 						}
 						repaint();
@@ -45,6 +49,7 @@ public class CreateBusPanel extends JPanel implements DropTargetListener {
 					public void setColor(Color c) {
 						if (bus != null) {
 							if (bus instanceof Bus) {
+								logger.info("Дополнительный цвет автобуса изменен");
 								((Bus) bus).setDopColor(c);
 							}
 						}
@@ -93,9 +98,11 @@ public class CreateBusPanel extends JPanel implements DropTargetListener {
 			if (transferable.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				String dragContents = (String) transferable.getTransferData(DataFlavor.stringFlavor);
 				if (dragContents.equals("BaseBus")) {
+					logger.info("Выбран автобус: BaseBus");
 					bus = new BaseBus(50,5,Color.black);
 					repaint();
 				} else if (dragContents.equals("Bus")) {
+					logger.info("Выбран автобус: Bus");
 					bus = new Bus(50,5,Color.black,Color.black, true, Doors.FIVE);
 					repaint();
 				} else if (dragContents.equals("1")) {
