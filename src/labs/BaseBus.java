@@ -12,6 +12,7 @@ public class BaseBus extends Vehicle {
 		this.maxSpeed = maxSpeed;
 		this.weight = weight;
 		this.colorBody = mainColor;
+		this.doorsForm = 0;
 	}
 
 	@Override
@@ -63,7 +64,17 @@ public class BaseBus extends Vehicle {
 		g.fillRect(posX + 60, posY + 17, 10, 10);
 		g.fillRect(posX + 80, posY + 17, 10, 10);
 		
-		draw.drawRectDoors(Doors.THREE, g, posX, posY);
+		switch(doorsForm){
+		case 0:
+			draw.drawRectDoors(Doors.THREE, g, posX, posY);
+			break;
+		case 1:
+			draw.drawElipseDoors(Doors.THREE, g, posX, posY);
+			break;
+		default:
+			draw.drawTriangleDoors(Doors.THREE, g, posX, posY);
+			break;
+		}
 		
 	}
 	
@@ -75,4 +86,7 @@ public class BaseBus extends Vehicle {
 		return first.getMaxSpeed() <= second.getMaxSpeed();
 	}
 	
+	public void setBodyColor(Color color) {
+		this.colorBody = color;
+	}
 }

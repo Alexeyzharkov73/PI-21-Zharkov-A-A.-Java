@@ -71,5 +71,8 @@ public class Bus extends BaseBus{
 			this.doorsForm = doorsForm;
 		}
 	}
-
+	
+	public void setDopColor(Color color) {
+		this.dopColor = color;
+	}
 }

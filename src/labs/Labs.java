@@ -64,34 +64,22 @@ public class Labs {
 		panel.setBounds(21, 24, 845, 447);
 		frame.getContentPane().add(panel);
 		
-		JButton btnNewButton = new JButton("BaseBus");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Color tmp = JColorChooser.showDialog(frame, "Выберите цвет", null);
-				if (tmp != null) {
-					ITransport s = new BaseBus(50,5,tmp);
-					panel.setBus(s);
-					panel.repaint();
-				}
-			}
-		});
-		btnNewButton.setBounds(904, 182, 140, 23);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Bus");
+		JButton btnNewButton_1 = new JButton("create bus");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color tmp = JColorChooser.showDialog(frame, "Выберите цвет", null);
-				if (tmp != null) {
-					Color tmp1 = JColorChooser.showDialog(frame, "Выберите цвет", null);
-					if(tmp1 != null) {
-						panel.setBus(new Bus(50,5,tmp,tmp1, true, Doors.FIVE));
+				AdditionalForm aForm = new AdditionalForm(new BusCallBack() {
+
+					@Override
+					public void takeBus(ITransport bus) {
+						panel.setBus(bus);
 						panel.repaint();
+						
 					}
-				}
+					
+				});
 			}
 		});
-		btnNewButton_1.setBounds(904, 221, 140, 23);
+		btnNewButton_1.setBounds(904, 181, 140, 29);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		SmallBusPanel panel_1 = new SmallBusPanel();
