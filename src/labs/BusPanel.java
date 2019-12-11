@@ -20,6 +20,26 @@ public class BusPanel extends JPanel {
 		
 	}
 	
+	public void loadParking(String fileName) {
+		this.parking.loadData(fileName);
+		repaint();
+	}
+	
+	public void loadCurrentParking(String fileName) {
+		this.parking.loadDataCurrent(fileName, currentLevel);
+		repaint();
+	}
+	
+	
+	public void saveParking(String fileName) {
+		this.parking.saveData(fileName);
+		repaint();
+	}
+	public void saveCurrentParking(String fileName) {
+		this.parking.saveDataCurrent(fileName, currentLevel);
+		repaint();
+	}
+	
 	public int setBus(ITransport bus) {
 		return parking.getParking(currentLevel).putBusInParking(bus);
 	}

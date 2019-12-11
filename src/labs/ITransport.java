@@ -2,8 +2,9 @@ package labs;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public interface ITransport {
+public interface ITransport extends Serializable {
 	void setPosition(int x, int y, int width, int height);
 	void moveTransport(Direction direction);
 	void drawBus(Graphics g, IDoors draw);

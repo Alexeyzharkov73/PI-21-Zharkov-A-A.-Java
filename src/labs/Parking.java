@@ -2,9 +2,10 @@ package labs;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Parking<T extends ITransport, D extends DoorsDraw> {
+public class Parking<T extends ITransport, D extends DoorsDraw> implements Serializable{
 	
 	private HashMap<Integer, T> parking;
 	private int countPlaces;

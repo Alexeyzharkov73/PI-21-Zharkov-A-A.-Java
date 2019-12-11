@@ -9,6 +9,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 
 public class Labs {
@@ -129,5 +133,67 @@ public class Labs {
 			}
 			
 		});
+		
+		JMenuBar menuBar = new JMenuBar();
+		JMenu file = new JMenu("File");
+		JMenuItem save = new JMenuItem("Save");
+		JMenuItem load = new JMenuItem("Load");
+		JMenuItem save_current = new JMenuItem("Save current level");
+		JMenuItem load_current = new JMenuItem("Load current level");
+		
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fc = new JFileChooser();  
+				if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {  
+				    try {  
+				        panel.saveParking(fc.getSelectedFile().getPath()); 
+				    }  
+				    catch (Exception e) {
+				    	System.out.println("save parking error");
+				    }  
+				} 
+			}
+		});
+		
+		save_current.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fc = new JFileChooser();  
+				if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {  
+				    try {  
+				        panel.saveCurrentParking(fc.getSelectedFile().getPath()); 
+				    }  
+				    catch (Exception e) {
+				    	System.out.println("save parking error");
+				    }  
+				} 
+			}
+		});
+
+		
+		load_current.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();  
+				if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {  
+					panel.loadCurrentParking(fc.getSelectedFile().getPath());
+				}
+			}
+		});
+		
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();  
+				if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {  
+					panel.loadParking(fc.getSelectedFile().getPath());
+				}
+			}
+		});
+		file.add(save);
+		file.add(load);
+		file.add(save_current);
+		file.add(load_current);
+		menuBar.add(file);
+		frame.setJMenuBar(menuBar);
 	}
 }
