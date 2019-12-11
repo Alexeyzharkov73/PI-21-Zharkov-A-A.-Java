@@ -1,23 +1,27 @@
 package labs;
 
 import java.awt.Graphics;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 
 public class SmallBusPanel extends JPanel {
 	
-	private ITransport bus;
-	
+	private HashSet<ITransport> bus = new HashSet<ITransport>();
+	private ITransport currentBus;
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		if(bus!=null) {
-			bus.setPosition(22, 150, 140, 221);
-			bus.drawBus(g, new DoorsDraw());
+		if(currentBus != null) {
+			currentBus.setPosition(22, 150, 140, 221);
+			currentBus.drawBus(g, new DoorsDraw());
 		}
 	}
 	
-	public void setShip(ITransport ship) {
-		this.bus = ship;
+	public void addBus(ITransport bus) {
+		this.bus.add(bus);
+		currentBus = bus;
 	}
+	
 }

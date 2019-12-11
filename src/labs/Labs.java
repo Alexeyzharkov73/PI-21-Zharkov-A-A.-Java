@@ -13,6 +13,8 @@ import javax.swing.JColorChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 
@@ -57,7 +59,7 @@ public class Labs {
 		frame.getContentPane().setLayout(null);
 		
 		panel = new BusPanel();
-		panel.setParking(new Parking<BaseBus, DoorsDraw>(20, 1081, 621));
+		panel.setParking(new MultiLevelParking(5, 1081, 621));
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBounds(21, 24, 845, 447);
 		frame.getContentPane().add(panel);
@@ -73,7 +75,7 @@ public class Labs {
 				}
 			}
 		});
-		btnNewButton.setBounds(907, 24, 124, 23);
+		btnNewButton.setBounds(904, 182, 140, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Bus");
@@ -89,7 +91,7 @@ public class Labs {
 				}
 			}
 		});
-		btnNewButton_1.setBounds(907, 63, 124, 23);
+		btnNewButton_1.setBounds(904, 221, 140, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		SmallBusPanel panel_1 = new SmallBusPanel();
@@ -105,7 +107,7 @@ public class Labs {
 		JButton btnNewButton_2 = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_1.setShip(panel.getBus(Integer.parseInt(formattedTextField.getText())-1));
+				panel_1.addBus(panel.getBus(Integer.parseInt(formattedTextField.getText())-1));
 				panel_1.repaint();
 				panel.repaint();
 			}
@@ -120,5 +122,24 @@ public class Labs {
 		formattedTextField = new JFormattedTextField();
 		formattedTextField.setBounds(84, 29, 46, 20);
 		panel_1.add(formattedTextField);
+		String[] str = new String[5];
+		for(int i = 1;i<6;i++) {
+			str[i-1] = "׃נמגוü  " + i;
+		}
+
+		list = new JList(str);
+		list.setSelectedIndex(0);
+		list.setBounds(904, 16, 140, 133);
+		frame.getContentPane().add(list);
+		list.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				BusPanel.currentLevel = list.getSelectedIndex();
+				panel.repaint();
+				
+			}
+			
+		});
 	}
 }
