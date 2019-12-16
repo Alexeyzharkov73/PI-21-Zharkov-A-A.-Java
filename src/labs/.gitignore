@@ -33,3 +33,5 @@
 /ParkingNotFoundException.class
 /ParkingOccupiedPlaceException.class
 /ParkingOverflowException.class
+/ParkingAlreadyHaveException.class
+/Labs$9.class

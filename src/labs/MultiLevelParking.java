@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class MultiLevelParking implements Serializable{
 	
@@ -73,6 +75,10 @@ public class MultiLevelParking implements Serializable{
 		} catch (Exception ex) {
 			System.out.println("load data error");
 		}
+	}
+	
+	public void sort() {
+		Collections.sort(parking);
 	}
 	
 }

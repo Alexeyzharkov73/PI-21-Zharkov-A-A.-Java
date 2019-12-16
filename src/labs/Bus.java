@@ -75,4 +75,52 @@ public class Bus extends BaseBus{
 	public void setDopColor(Color color) {
 		this.dopColor = color;
 	}
+	
+	@Override
+	public int compareTo(Object other) {
+		Bus o  = null;
+		if(other == null) {
+			return 1;
+		}
+		if(other instanceof Bus) {
+			o = (Bus)other;
+		} else {
+			return 1;
+		}
+		int res = super.compareTo(o);
+		if(res != 0) {
+			return res;
+		}
+		if(isDorsDraw != o.isDorsDraw) {
+			return isDorsDraw ? 1 : -1;
+		}
+		if(dopColor.getRGB() != o.dopColor.getRGB()) {
+			return dopColor.getRGB()>o.dopColor.getRGB() ? 1 : -1;
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if(other == null) {
+			return false;
+		}
+		Bus o  = null;
+		if(other instanceof Bus) {
+			o = (Bus)other;
+		} else {
+			return false;
+		}
+		boolean res = super.equals(o);
+		if(!res) {
+			return res;
+		}	
+		if(isDorsDraw != o.isDorsDraw) {
+			return false;
+		}
+		if(dopColor.getRGB()!=o.dopColor.getRGB()) {
+			return false;
+		}
+		return true;
+	}
 }

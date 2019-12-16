@@ -163,6 +163,15 @@ public class Labs {
 		list.setSelectedIndex(0);
 		list.setBounds(904, 16, 140, 133);
 		frame.getContentPane().add(list);
+		
+		JButton btnSor = new JButton("sort");
+		btnSor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panel.sort();
+			}
+		});
+		btnSor.setBounds(934, 217, 78, 29);
+		frame.getContentPane().add(btnSor);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override

@@ -2,8 +2,10 @@ package labs;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.print.attribute.standard.MediaSize.Other;
 
-public class BaseBus extends Vehicle {
+
+public class BaseBus extends Vehicle implements Comparable<Object> {
 	
 	protected int busWidth = 120;
 	protected int busHeight = 80;
@@ -88,5 +90,51 @@ public class BaseBus extends Vehicle {
 	
 	public void setBodyColor(Color color) {
 		this.colorBody = color;
+	}
+	
+	@Override
+	public int compareTo(Object other) {
+		BaseBus o = null;
+		if(other == null) {
+			return 1;
+		}
+		if(other instanceof BaseBus) {
+			o = (BaseBus)other;
+		} else {
+			return 1;
+		}
+		if(maxSpeed != o.maxSpeed) {
+			return maxSpeed > o.maxSpeed ? 1 : -1;
+		}
+		if(weight != o.weight) {
+			return weight > o.weight ? 1 : -1;
+		}
+		if(colorBody.getRGB() != o.colorBody.getRGB()) {
+			return colorBody.getRGB() > o.colorBody.getRGB() ? 1 : -1;
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(o == null) {
+			return false;
+		}
+		BaseBus otherShip = null;
+		if(o instanceof BaseBus) {
+			otherShip = (BaseBus)o;
+		} else {
+			return false;
+		}
+		if(maxSpeed != otherShip.maxSpeed) {
+			return false;
+		}
+		if(weight != otherShip.weight) {
+			return false;
+		}
+		if(colorBody.getRGB() != otherShip.colorBody.getRGB()) {
+			return false;
+		}
+		return true;
 	}
 }

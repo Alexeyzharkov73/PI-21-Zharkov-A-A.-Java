@@ -40,10 +40,16 @@ public class BusPanel extends JPanel {
 		repaint();
 	}
 	
-	public int setBus(ITransport bus) {
+	public int setBus(ITransport bus) throws ParkingOverflowException, ParkingAlreadyHaveException {
 		return parking.getParking(currentLevel).putBusInParking(bus);
 	}
+	
 	public ITransport getBus(int ticket) {
 		return parking.getBus(currentLevel, ticket);
+	}
+	
+	public void sort() {
+		this.parking.sort();
+		repaint();
 	}
 }
